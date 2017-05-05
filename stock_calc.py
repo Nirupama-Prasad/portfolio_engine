@@ -13,6 +13,7 @@ dictionary_strategies = {
 def get_portfolio(amount, stock_type):
 	stock_dictionary = {}
 	sum_peg = 0
+	each_balance = 0
 
 	for each_stock in stock_type:
 		internal_dictionary = {}
@@ -25,7 +26,7 @@ def get_portfolio(amount, stock_type):
 
 		stock_dictionary[each_stock] = internal_dictionary
 
-	balance = 0
+	#balance = 0
 	for each_stock in stock_dictionary.keys():
 		each_stock_price = float(stock_dictionary[each_stock]['price'])
 		each_stock_peg = stock_dictionary[each_stock]['peg']
@@ -33,7 +34,7 @@ def get_portfolio(amount, stock_type):
 		each_stock_amount = float(amount * each_stock_ratio)
 		
 		each_stock_count = int(each_stock_amount/each_stock_price)
-		balance += each_stock_amount % each_stock_price
+		each_balance += each_stock_amount % each_stock_price
 
 		stock_dictionary[each_stock]['ratio'] = each_stock_ratio
 		stock_dictionary[each_stock]['amount'] = each_stock_amount
@@ -42,11 +43,15 @@ def get_portfolio(amount, stock_type):
 	for key, value in stock_dictionary.items():
 		print key, value
 
-	print "balance is: ", balance
+	print "balance is: ", each_balance
+
+	return stock_dictionary
 
 
 def test_command_line():
+	balance = 0
 	get_portfolio(5000, dictionary_strategies['growth'])
+	get_portfolio(balance, dictionary_strategies['growth'])
 
 
 test_command_line()
