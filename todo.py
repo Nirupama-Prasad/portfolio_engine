@@ -2,11 +2,12 @@
 
 ALGORITHM:
 ----------
-1. make static lists of all stocks for all strategies (3 per strat)
-2. for each stock, get price, PEG
-3. find out ranking and ratios per stock
-4. get amount per stock + round down number of stocks
-5. figure out what to do with remainder
+x1. make static lists of all stocks for all strategies (3 per strat)
+x2. for each stock, get price, PEG
+x3. find out ranking and ratios per stock
+x4. get amount per stock + round down number of stocks
+x5. figure out what to do with remainder
+6. catch http error
 
 FRONT END INPUT:
 -----------
