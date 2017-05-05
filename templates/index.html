@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+ 
+     <title> Stock Search Engine </title>
+ 
+     <!-- Bootstrap core CSS -->
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+ 
+     <!-- Custom styles for this template -->
+     <link href="stocks.css" rel="stylesheet">
+ 
+     <script
+        src="https://code.jquery.com/jquery-1.9.0.js">        
+    </script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+ </head>
+ 
+ <body>
+ 
+     <div class="container">
+ 
+         <form class="form-signin" action="/calculate" method="post" role="form" id="search_box">
+             <h2 align="center">Stock Search Engine </h2>
+             <input type="text" name="stock_symbol" id="symbol" class="form-control" placeholder="Enter Stock Symbol" required autofocus> 
+             <button class="btn btn-lg btn-primary btn-block" type="button" id="calc_button">Calculate </button>
+         </form>
+
+
+      
+     </div>
+
+     <div class="container">
+           <h4 id="stock_time">  </h4>
+           <h4 id="stock_name">  </h4>
+           <h4 id="stock_changes"> </h4>
+           <img id="stock_image" src="{{url_for('static', filename='stocks.png')}}" />
+     </div>
+   
+     <script type="text/javascript">
+         
+         $(function(){
+
+            $("#stock_image").hide();
+
+            $(window).keydown(function(event){
+                if(event.keyCode == 13){
+                    $("#calc_button").click();
+                    event.preventDefault();
+                    return false;
+                }
+            });
+
+
+            $('#calc_button').click(function(){
+                var symbol = $('#symbol').val();
+                $.ajax({
+                    url: '/calculate',
+                    data: $('form').serialize(),
+                    type: 'POST',
+                    success: function(response) {
+
+                        if(response === null){
+                            alert('Enter correct symbol!');
+                            return;
+                        }
+                        $("#stock_image").show();
+                        
+                        d = new Date();
+                        $("#stock_image").attr("src", "static/stocks.png?"+d.getTime());                        
+                        
+                        json_data = JSON.parse(response);
+                        $("#stock_time").text(json_data.time);
+                        $("#stock_name").text(json_data.name);
+                        $("#stock_changes").text(json_data.change);
+                        
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+                
+            });
+
+         });
+
+     </script>
+
+ </body>
+ 
+ </html>
