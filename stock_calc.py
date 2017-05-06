@@ -1,6 +1,7 @@
 
 from yahoo_finance import Share as sh
 import operator
+import urllib2
 
 #Global
 growth_stocks = ['AAPL', 'FB', 'VMW', 'NFLX', 'AMZN']
@@ -19,7 +20,13 @@ def get_portfolio(amount, stock_type):
 
 	for each_stock in stock_type:
 		internal_dictionary = {}
-		stock = sh(each_stock)
+		stock = None
+		try:
+			stock = sh(each_stock)
+		except urllib2.HTTPError:
+			print "Server error - Retrying"
+			return amount
+
 		price = float(stock.get_price())
 
 		if(price > amount):
@@ -29,33 +36,38 @@ def get_portfolio(amount, stock_type):
 		internal_dictionary['peg'] = float(stock.get_price_earnings_growth_ratio())
 		
 		#calculate sum here for later on
-		sum_peg += float(internal_dictionary['peg'])
+		sum_peg += internal_dictionary['peg']
 
 		stock_dictionary[each_stock] = internal_dictionary
 
-	#balance = 0
+
 	for each_stock in stock_dictionary.keys():
 		each_stock_price = float(stock_dictionary[each_stock]['price'])
 		each_stock_peg = stock_dictionary[each_stock]['peg']
 		each_stock_ratio = float(each_stock_peg)/sum_peg	
 		each_stock_amount = float(amount * each_stock_ratio)
+
 		
 		each_stock_count = int(each_stock_amount/each_stock_price)
-		total_balance += each_stock_amount % each_stock_price
+		total_balance += (each_stock_amount % each_stock_price)
 
 		stock_dictionary[each_stock]['ratio'] = each_stock_ratio
 		stock_dictionary[each_stock]['amount'] = each_stock_amount
 		stock_dictionary[each_stock]['count'] = each_stock_count
 
+		#if dictionary was already there
 		if bool(g_stock_dictionary) == True:
 			g_stock_dictionary[each_stock]['count'] += each_stock_count
 			g_stock_dictionary[each_stock]['amount'] += each_stock_amount
-			print "updating stock: ", each_stock, "to", g_stock_dictionary[each_stock]['count'] 
-			print "updating stock amount: ", each_stock, "to", g_stock_dictionary[each_stock]['amount'] 
 
+
+	
+
+	print stock_dictionary
 
 	#if dictionary was empty
 	if bool(g_stock_dictionary) == False:
+		print 'updating once'
 		g_stock_dictionary = stock_dictionary.copy()
 
 	return total_balance
@@ -64,21 +76,14 @@ def get_portfolio(amount, stock_type):
 def test_command_line():
 	global g_stock_dictionary
 	global dictionary_strategies
+	balance = 100000
 
-	balance = get_portfolio(5000, dictionary_strategies['growth'])
-	print "before"
-	for key, value in g_stock_dictionary.items():
-		print key, value
-	print "balance is ", balance
+	while balance > 0:
+		balance = get_portfolio(balance, dictionary_strategies['growth'])
+		print "new balance =", balance
+		print "------" * 40
 
 
-	balance = get_portfolio(balance, dictionary_strategies['growth'])
-	print "*" * 20
-
-	for key, value in g_stock_dictionary.items():
-		print key, value
-
-	print "balance is", balance
 
 
 test_command_line()
