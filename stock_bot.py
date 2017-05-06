@@ -9,7 +9,7 @@ growth_stocks = ['AAPL', 'FB', 'VMW', 'NFLX', 'AMZN']
 value_stocks = ['ARW', 'COF', 'CI', 'FITB', 'USB']
 ethical_stocks = ['WFM', 'SBUX', 'MSFT', 'FB']
 quality_stocks = ['TSN', 'ENS', 'EME', 'CVG']
-index_stocks = ['FB', 'TSLA', 'GOOG', 'AMZN']
+index_stocks = ['FB', 'AAPL', 'GOOG', 'AMZN']
 
 portfolio = {}
 dictionary_strategies = {
@@ -48,11 +48,10 @@ def generate_five_day():
 	for each in global_stock_index.values():
 		lookup.draw_stock(each)
 
+	lookup.draw_portfolio(portfolio)
+
 def get_portfolio(amount, stock_type):
-	global portfolio
-	global uninvested_amount
-	global is_stock_drawn
-	global global_stock_index, is_ratio_method_over
+	global portfolio, uninvested_amount, is_stock_drawn, global_stock_index, is_ratio_method_over
 
 	sum_peg = 0
 	total_balance = 0
@@ -124,8 +123,7 @@ def get_portfolio(amount, stock_type):
 
 
 def test_command_line(strategy):
-	global portfolio
-	global dictionary_strategies
+	global portfolio, dictionary_strategies
 	balance = 5000
 
 	stock_type = dictionary_strategies[strategy]
@@ -149,4 +147,4 @@ def test_command_line(strategy):
 
 
 
-test_command_line('quality')
+test_command_line('growth')
