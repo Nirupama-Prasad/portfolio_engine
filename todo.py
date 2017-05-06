@@ -7,7 +7,9 @@ x2. for each stock, get price, PEG
 x3. find out ranking and ratios per stock
 x4. get amount per stock + round down number of stocks
 x5. figure out what to do with remainder
-6. catch http error
+x6. catch http error
+7. add remaining lists
+x8. performance caching
 
 FRONT END INPUT:
 -----------
@@ -21,3 +23,7 @@ FRONT END OUTPUT:
 2. for each in stock:
 	amount spent
 3. portfolio image itself
+
+ERROR CHECKS:
+1. for invalid symbols, etc
+2. httperror in lookup.py while doing history
