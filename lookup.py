@@ -36,7 +36,6 @@ def draw_stock(stock):
 	plt.gcf().autofmt_xdate()
 
 	plt.savefig('static/stocks.png')
-	#plt.clf() 
 
 def draw_portfolio(portfolio):
 	global portfolio_history_list, dict_stock_to_five_day_prices, portfolio_dates
@@ -51,17 +50,22 @@ def draw_portfolio(portfolio):
 
 	print dict_stock_to_five_day_prices
 
-	list_prices = []
-
+	list_prices = [0,0,0,0,0]
+	for each in dict_stock_to_five_day_prices.values():
+		for index in range(0, 5):
+			list_prices[index] += each[index]
+		
+	print list_prices
 
 	x = [datetime.strptime(d,'%Y-%m-%d').date() for d in portfolio_dates]
 	y = list_prices
+	plt.clf() 
 	plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y/%m/%d'))
 	plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-	plt.plot(x,y, label=stock.get_name())
+	plt.plot(x,y, label='portfolio')
 	plt.gcf().autofmt_xdate()
 
-	plt.savefig('static/stocks.png')
+	plt.savefig('static/portfolio.png')
 
 
 

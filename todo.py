@@ -8,8 +8,9 @@ x3. find out ranking and ratios per stock
 x4. get amount per stock + round down number of stocks
 x5. figure out what to do with remainder
 x6. catch http error
-7. add remaining lists
+x7. add remaining lists
 x8. performance caching
+x9. plot each stocks and portfolio chart
 
 FRONT END INPUT:
 -----------
@@ -30,3 +31,4 @@ BACKEND
 ERROR CHECKS:
 1. for invalid symbols, etc
 2. httperror in lookup.py while doing history
+3. empty input from html

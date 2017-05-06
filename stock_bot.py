@@ -122,9 +122,9 @@ def get_portfolio(amount, stock_type):
 	return total_balance
 
 
-def test_command_line(strategy):
+def test_command_line(amount, strategy):
 	global portfolio, dictionary_strategies
-	balance = 5000
+	balance = amount
 
 	stock_type = dictionary_strategies[strategy]
 	ret = cache_stocks(stock_type)
@@ -143,8 +143,9 @@ def test_command_line(strategy):
 
 	#plot five day historical data for new stocks
 	generate_five_day()
+	return portfolio
 	
 
 
 
-test_command_line('growth')
+#test_command_line('growth')

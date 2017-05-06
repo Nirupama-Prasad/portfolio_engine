@@ -7,13 +7,12 @@
  
      <!-- Bootstrap core CSS -->
      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
- 
-     <!-- Custom styles for this template -->
-     <link href="stocks.css" rel="stylesheet">
- 
+  
      <script
-        src="https://code.jquery.com/jquery-1.9.0.js">        
-    </script>
+      src="https://code.jquery.com/jquery-1.12.4.min.js"
+      integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+      crossorigin="anonymous"> 
+      </script>    
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  
  </head>
@@ -23,8 +22,32 @@
      <div class="container">
  
          <form class="form-signin" action="/calculate" method="post" role="form" id="search_box">
+
              <h2 align="center">Stock Search Engine </h2>
-             <input type="text" name="stock_symbol" id="symbol" class="form-control" placeholder="Enter Stock Symbol" required autofocus> 
+
+             <!--dropdown for strategy 1-->
+             <!--dropdown for strategy 1-->
+              <select name="strategy_1">
+                <option> None </option>
+                <option>Index</option>
+                <option>Value</option>
+                <option>Growth</option>
+                <option>Ethical</option>
+                <option>Quality</option>
+              </select>
+              <br>
+
+            <!--dropdown for strategy 2-->
+              <select name="strategy_2">
+                <option> None </option>
+                <option>Index</option>
+                <option>Value</option>
+                <option>Growth</option>
+                <option>Ethical</option>
+                <option>Quality</option>
+              </select>
+
+             <input type="text" name="total_amount" id="symbol" class="form-control" placeholder="Enter Amount To Invest" required autofocus> 
              <button class="btn btn-lg btn-primary btn-block" type="button" id="calc_button">Calculate </button>
          </form>
 
@@ -36,6 +59,7 @@
            <h4 id="stock_time">  </h4>
            <h4 id="stock_name">  </h4>
            <h4 id="stock_changes"> </h4>
+           <img id="portfolio_image" src="{{url_for('static', filename='portfolio.png')}}" />
            <img id="stock_image" src="{{url_for('static', filename='stocks.png')}}" />
      </div>
    
@@ -69,7 +93,8 @@
                         $("#stock_image").show();
                         
                         d = new Date();
-                        $("#stock_image").attr("src", "static/stocks.png?"+d.getTime());                        
+                        $("#stock_image").attr("src", "static/stocks.png?"+d.getTime());  
+                        $("#portfolio_image").attr("src", "static/portfolio.png?"+d.getTime());                        
                         
                         json_data = JSON.parse(response);
                         $("#stock_time").text(json_data.time);
@@ -78,7 +103,7 @@
                         
                     },
                     error: function(error) {
-                        console.log(error);
+                        alert(error);
                     }
                 });
                 
