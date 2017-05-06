@@ -7,9 +7,10 @@ import lookup
 #Global
 growth_stocks = ['AAPL', 'FB', 'VMW', 'NFLX', 'AMZN']
 value_stocks = ['ARW', 'COF', 'CI', 'FITB', 'USB']
-ethical_stocks = {'WFM', 'SBUX', 'MSFT', 'FB'}
-quality_stocks = {'TSN', 'ENS', 'EME', 'CVG'}
-index_stocks = {'FB', 'TSLA', 'GOOG', 'AMZN'}
+ethical_stocks = ['WFM', 'SBUX', 'MSFT', 'FB']
+quality_stocks = ['TSN', 'ENS', 'EME', 'CVG']
+index_stocks = ['FB', 'TSLA', 'GOOG', 'AMZN']
+
 portfolio = {}
 dictionary_strategies = {
 	'growth' 	: growth_stocks,
@@ -148,4 +149,4 @@ def test_command_line(strategy):
 
 
 
-test_command_line('growth')
+test_command_line('quality')
