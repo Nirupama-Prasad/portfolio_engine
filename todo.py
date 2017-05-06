@@ -24,6 +24,9 @@ FRONT END OUTPUT:
 	amount spent
 3. portfolio image itself
 
+BACKEND 
+1. pass information back
+
 ERROR CHECKS:
 1. for invalid symbols, etc
 2. httperror in lookup.py while doing history

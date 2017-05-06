@@ -7,10 +7,16 @@ import lookup
 #Global
 growth_stocks = ['AAPL', 'FB', 'VMW', 'NFLX', 'AMZN']
 value_stocks = ['ARW', 'COF', 'CI', 'FITB', 'USB']
+ethical_stocks = {'WFM', 'SBUX', 'MSFT', 'FB'}
+quality_stocks = {'TSN', 'ENS', 'EME', 'CVG'}
+index_stocks = {'FB', 'TSLA', 'GOOG', 'AMZN'}
 portfolio = {}
 dictionary_strategies = {
 	'growth' 	: growth_stocks,
-	'value'		: value_stocks
+	'value'		: value_stocks,
+	'ethical'	: ethical_stocks,
+	'quality'	: quality_stocks,
+	'index'		: index_stocks
 }
 uninvested_amount = 0
 is_stock_drawn = False
