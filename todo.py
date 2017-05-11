@@ -22,7 +22,7 @@ FRONT END OUTPUT:
 -----------
 1. P elements with portfolio details:
 2. for each in stock:
-	amount spent
+	amount spent - pie chart
 3. portfolio image itself
 
 BACKEND 

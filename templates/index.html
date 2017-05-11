@@ -68,6 +68,7 @@
          $(function(){
 
             $("#stock_image").hide();
+            $("#portfolio_image").hide();
 
             $(window).keydown(function(event){
                 if(event.keyCode == 13){
@@ -93,6 +94,7 @@
                             return;
                         }
                         $("#stock_image").show();
+                        $("#portfolio_image").show();
                         
                         d = new Date();
                         $("#stock_image").attr("src", "static/stocks.png?"+d.getTime());  

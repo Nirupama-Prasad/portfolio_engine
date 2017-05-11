@@ -13,9 +13,10 @@ def draw_stock(stock):
 	stock_dictionary = {}
 	#Plot five day data
 	date_now = datetime.now().date()
-	date_five_before = (datetime.now() - timedelta(days=5)).date()
+	date_five_before = (datetime.now() - timedelta(days=10)).date()
 	
 	five_day_data = stock.get_historical(str(date_five_before), str(date_now))
+	five_day_data = five_day_data[-5:]
 
 	list_dates = []
 	list_prices = []
