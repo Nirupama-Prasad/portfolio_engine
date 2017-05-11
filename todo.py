@@ -26,9 +26,28 @@ FRONT END OUTPUT:
 3. portfolio image itself
 
 BACKEND 
+-----------
 1. pass information back
+2. handle server.pys strategy split
+3. execute clean script as part of click (clear_Everything)
 
 ERROR CHECKS:
-1. for invalid symbols, etc
+-----------
+x1. for invalid strategy, 
+x1. invalid amount
 2. httperror in lookup.py while doing history
 3. empty input from html
+4. sometimes portfolio exceeds total amount
+5. FIX all in the bug list
+
+BUG LIST:
+-----------
+1. 
+  File "/Users/kprasad/Desktop/portfolio_engine/lookup.py", line 24, in draw_stock
+    five_day_data = stock.get_historical(str(date_five_before), str(date_now))
+  File "/Library/Python/2.7/site-packages/yahoo_finance/__init__.py", line 342, in get_historical
+    result = self._request(query)
+  File "/Library/Python/2.7/site-packages/yahoo_finance/__init__.py", line 125, in _request
+    raise YQLResponseMalformedError()
+YQLResponseMalformedError: Response malformed.
+

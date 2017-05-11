@@ -8,6 +8,12 @@ dict_stock_to_five_day_prices = {}
 portfolio_history_list = []
 portfolio_dates = []
 
+def clear_everything():
+	global dict_stock_to_five_day_prices, portfolio_dates, portfolio_history_list
+	dict_stock_to_five_day_prices = {}
+	portfolio_history_list = []
+	portfolio_dates = []
+
 def draw_stock(stock):
 	global dict_stock_to_five_day_prices, portfolio_dates
 	stock_dictionary = {}
@@ -15,7 +21,10 @@ def draw_stock(stock):
 	date_now = datetime.now().date()
 	date_five_before = (datetime.now() - timedelta(days=10)).date()
 	
-	five_day_data = stock.get_historical(str(date_five_before), str(date_now))
+	try:
+		five_day_data = stock.get_historical(str(date_five_before), str(date_now))
+	except:
+		return False
 	five_day_data = five_day_data[-5:]
 
 	list_dates = []
@@ -37,6 +46,7 @@ def draw_stock(stock):
 	plt.gcf().autofmt_xdate()
 
 	plt.savefig('static/stocks.png')
+	return True
 
 def draw_portfolio(portfolio):
 	global portfolio_history_list, dict_stock_to_five_day_prices, portfolio_dates

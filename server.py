@@ -1,30 +1,57 @@
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import abort
+from flask import jsonify
 
 import lookup as lk
 import json
 import stock_bot as sb
 
 app = Flask(__name__)
+
+@app.errorhandler(400)
+def custom400(error):
+    response = jsonify({'message': error.description,
+    	'code': 400})
+    return response
+
  
 @app.route("/")
 def enter():
-	print "here"
 	return render_template('index.html')	
 
 @app.route("/calculate", methods=["POST"])
 def runn():
 	data = request.data
-	total_amount = float(request.form['total_amount'])
-	strategy_1 = request.form['strategy_1']
-	strategy_2 = request.form['strategy_2']
+	sb.clear_everything()
+	
+	if not request.form['total_amount']:
+		abort(400, 'Enter a valid amount, greater than 500!')
 
-	portfolio = sb.test_command_line(total_amount, strategy_1.lower())
+	if request.form['strategy_1'] == 'None':
+		abort(400, 'Please choose atleast one valid strategy')
+
+	strategy_1 = request.form['strategy_1']
+	total_amount = float(request.form['total_amount'])
+
+
+	if request.form['strategy_2'] == 'None':
+			portfolio = sb.execute(total_amount, strategy_1.lower())
+	else:
+		strategy_2 = request.form['strategy_2']
+		portfolio = sb.execute(total_amount/2, strategy_1.lower())
+		sb.clear_everything()
+		portfolio = sb.execute(total_amount/2, strategy_2.lower())
+
+
 	# ticker_symbol = request.form["stock_symbol"]
 	# stock_dict = lk.pull_stock(ticker_symbol)	
-	json_values = json.dumps(portfolio)
-	return json_values
+	web_response = {}
+	web_response['code'] = 0
+	web_response['portfolio'] = portfolio
+	json_values = json.dumps(web_response)
+	return jsonify(web_response)
  	
 if __name__ == "__main__":
     app.run()

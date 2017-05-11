@@ -88,11 +88,13 @@
                     success: function(response) {
 
                         console.log(response)
-
-                        if(response === null){
-                            alert('Enter correct symbol!');
+                        //handle all errors here
+                        if(response['code'] != 0){
+                            alert(response['message'])
                             return;
                         }
+
+                        //else, continue
                         $("#stock_image").show();
                         $("#portfolio_image").show();
                         
@@ -107,7 +109,7 @@
                         
                     },
                     error: function(error) {
-                        alert(error);
+                        console.log(error);
                     }
                 });
                 

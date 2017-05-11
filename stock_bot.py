@@ -5,11 +5,11 @@ import urllib2
 import lookup
 
 #Global
-growth_stocks = ['AAPL', 'FB', 'VMW', 'NFLX', 'AMZN']
-value_stocks = ['ARW', 'COF', 'CI', 'FITB', 'USB']
-ethical_stocks = ['WFM', 'SBUX', 'MSFT', 'FB']
-quality_stocks = ['TSN', 'ENS', 'EME', 'CVG']
-index_stocks = ['FB', 'AAPL', 'GOOG', 'AMZN']
+growth_stocks 	= ['AAPL', 'FB', 'VMW', 'NFLX', 'AMZN']
+value_stocks 	= ['ARW', 'COF', 'CI', 'FITB', 'USB']
+ethical_stocks 	= ['WFM', 'SBUX', 'MSFT', 'SBUX', 'NSRGY']
+quality_stocks 	= ['PORTX', 'ENS', 'EME', 'CVG', 'AXP']
+index_stocks 	= ['IXUS', 'VTI', 'ILTB', 'VTSMX', 'VXUS']
 
 portfolio = {}
 dictionary_strategies = {
@@ -23,6 +23,17 @@ uninvested_amount = 0
 is_stock_drawn = False
 global_stock_index = {}
 is_ratio_method_over = False
+
+def clear_everything():
+	global global_stock_index, portfolio, is_stock_drawn, is_ratio_method_over, uninvested_amount
+	global_stock_index = {}
+	portfolio = {}
+	is_stock_drawn = False
+	is_ratio_method_over = False
+	uninvested_amount = 0
+	lookup.clear_everything()
+	#execute clean script here
+
 
 def get_eligible_stock(stock_dictionary, amount):
 	sorted_stocks_by_peg = sorted(stock_dictionary.items(), key=operator.itemgetter(1), reverse=True)
@@ -46,7 +57,10 @@ def cache_stocks(stock_type):
 
 def generate_five_day():
 	for each in global_stock_index.values():
-		lookup.draw_stock(each)
+		success = False
+		while not success:
+			success = lookup.draw_stock(each)
+			#repeat for http errors
 
 	lookup.draw_portfolio(portfolio)
 
@@ -67,7 +81,10 @@ def get_portfolio(amount, stock_type):
 			continue
 
 		internal_dictionary['price'] = float(price)
-		internal_dictionary['peg'] = float(stock.get_price_earnings_growth_ratio())
+		individual_peg = float(stock.get_price_earnings_growth_ratio())
+		if individual_peg == 0:
+			individual_peg = 1
+		internal_dictionary['peg'] = individual_peg
 		internal_dictionary['name'] = stock.get_name()
 		#calculate sum here for later on
 		sum_peg += internal_dictionary['peg']
@@ -116,13 +133,13 @@ def get_portfolio(amount, stock_type):
 
 	#if dictionary was empty
 	if bool(portfolio) == False:
-		# print 'updating once'
+		#print 'updating once'
 		portfolio = stock_dictionary.copy()
 
 	return total_balance
 
 
-def test_command_line(amount, strategy):
+def execute(amount, strategy):
 	global portfolio, dictionary_strategies
 	balance = amount
 
