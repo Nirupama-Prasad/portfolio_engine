@@ -3,7 +3,7 @@
  
  <head>
  
-     <title> Stock Search Engine </title>
+     <title> Stock Portfolio Suggestion Engine </title>
  
      <!-- Bootstrap core CSS -->
      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -56,9 +56,7 @@
      </div>
 
      <div class="container">
-           <h4 id="stock_time">  </h4>
-           <h4 id="stock_name">  </h4>
-           <h4 id="stock_changes"> </h4>
+           <h4 id='portfolio_title'>Portfolio breakdown</h4>
            <img id="portfolio_image" src="{{url_for('static', filename='portfolio.png')}}" />
            <img id="stock_image" src="{{url_for('static', filename='stocks.png')}}" />
      </div>
@@ -101,7 +99,15 @@
                         d = new Date();
                         $("#stock_image").attr("src", "static/stocks.png?"+d.getTime());  
                         $("#portfolio_image").attr("src", "static/portfolio.png?"+d.getTime());                        
-                        
+                        var portfolio = response.portfolio;
+                        console.log(portfolio)
+                        for (var i =0; i < portfolio.length; i++){
+                            stock_object = portfolio[i];
+                            console.log(stock_object)
+                            for(var property in stock_object){
+                                console.log( 'property' + property + ' = ' + stock_object[property]);
+                            }
+                        }
                         //json_data = JSON.parse(response);
                         //$("#stock_time").text(response.portfolio);
                         //$("#stock_name").text(response.portfolio[1].name);
