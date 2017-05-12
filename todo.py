@@ -29,7 +29,8 @@ BACKEND
 -----------
 x1. pass information back
 x2. handle server.pys strategy split
-3. execute clean script as part of click (clear_Everything)
+x3. execute clean script as part of click (clear_Everything)
+4. remove clean script from git
 
 ERROR CHECKS:
 -----------
