@@ -58,10 +58,10 @@ def cache_stocks(stock_type):
 	return True
 
 def generate_five_day():
-	for each in global_stock_index.values():
+	for symbol, each in global_stock_index.items():
 		success = False
 		while not success:
-			success = lookup.draw_stock(each)
+			success = lookup.draw_stock(each, portfolio[symbol]['index'])
 			#repeat for http errors
 
 	lookup.draw_portfolio(portfolio)
@@ -72,6 +72,7 @@ def get_portfolio(amount, stock_type):
 	sum_peg = 0
 	total_balance = 0
 	stock_dictionary = {}
+	index = 0
 
 	for each_stock in stock_type:
 		internal_dictionary = {}
@@ -88,6 +89,8 @@ def get_portfolio(amount, stock_type):
 			individual_peg = 1
 		internal_dictionary['peg'] = abs(individual_peg)
 		internal_dictionary['name'] = stock.get_name()
+		internal_dictionary['index'] = index
+		index = index + 1
 		#calculate sum here for later on
 		sum_peg += internal_dictionary['peg']
 		stock_dictionary[each_stock] = internal_dictionary
@@ -139,6 +142,20 @@ def get_portfolio(amount, stock_type):
 	return total_balance
 
 
+def run_diagnostics():
+	sum_stocks = 0
+	sum_portfolio_counts = 0 
+	for each in portfolio:
+		print portfolio[each], '-- amount ->', portfolio[each]['amount']
+		sum_stocks += portfolio[each]['amount']
+		print portfolio[each], 'count ', portfolio[each]['count'], 'price', portfolio[each]['price']
+		print 'for a total of ', portfolio[each]['count'] * portfolio[each]['price']
+		sum_portfolio_counts += portfolio[each]['count'] * portfolio[each]['price']
+		print "***" * 3
+	print "Total spent: ", sum_portfolio_counts
+	print "total allocated:", sum_stocks
+
+
 def execute(amount, strategy, ex):
 	global portfolio, dictionary_strategies, older_portfolio
 	global global_stock_index, older_global_stock_index
@@ -149,15 +166,10 @@ def execute(amount, strategy, ex):
 	while ret != True:
 		cache_stocks(stock_type)
 
-	# print 'successfully looked up stocks'
-	# print global_stock_index
-
 	while balance > 0:
 		balance = get_portfolio(balance, stock_type)
-		# print "new portfolio: "
-		# print portfolio
-		# print "------" * 40
-		# print "new balance =", balance
+		#run_diagnostics()
+
 
 	#plot five day historical data for new stocks
 	if ex == 'double_1':
@@ -176,8 +188,6 @@ def execute(amount, strategy, ex):
 	generate_five_day()
 	
 	return portfolio
+
+
 	
-
-
-
-#test_command_line('growth')

@@ -38,7 +38,7 @@ x1. for invalid strategy,
 x1. invalid amount
 x2. httperror in lookup.py while doing history
 x3. empty input from html
-4. sometimes portfolio exceeds total amount - for all except growth stocks
+x4. sometimes portfolio exceeds total amount - for all except growth stocks
 5. FIX all in the bug list
 
 
