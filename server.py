@@ -53,7 +53,7 @@ def runn():
 	# stock_dict = lk.pull_stock(ticker_symbol)	
 	web_response = {}
 	web_response['code'] = 0
-	web_response['portfolio'] = portfolio
+	web_response['portfolio'] = json.dumps(portfolio)
 	#json_values = json.dumps(web_response)
 	return jsonify(web_response)
  	

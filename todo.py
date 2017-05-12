@@ -20,17 +20,17 @@ x2. text box for amount
 
 FRONT END OUTPUT:
 -----------
-1. P elements with portfolio details:
-2. for each in stock:
-	amount spent - pie chart
-x3. portfolio image itself
+z1. P elements with portfolio details:
+x2. for each in stock:
+3.	amount spent - pie chart
+x4. portfolio image itself
 
 BACKEND 
 -----------
 x1. pass information back
 x2. handle server.pys strategy split
 x3. execute clean script as part of click (clear_Everything)
-4. remove clean script from git
+x4. remove clean script from git
 
 ERROR CHECKS:
 -----------
@@ -40,6 +40,8 @@ x2. httperror in lookup.py while doing history
 x3. empty input from html
 x4. sometimes portfolio exceeds total amount - for all except growth stocks
 5. FIX all in the bug list
+6. Build retry and timeout mechanism for server error
+7. performance tracking
 
 
 BUG LIST:

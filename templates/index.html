@@ -23,7 +23,7 @@
  
          <form class="form-signin" action="/calculate" method="post" role="form" id="search_box">
 
-             <h2 align="center">Stock Search Engine </h2>
+             <h2 align="center">Stock Portfolio Suggestion Engine </h2>
 
              <!--dropdown for strategy 1-->
              <!--dropdown for strategy 1-->
@@ -55,10 +55,16 @@
       
      </div>
 
-     <div class="container">
-           <h4 id='portfolio_title'>Portfolio breakdown</h4>
-           <img id="portfolio_image" src="{{url_for('static', filename='portfolio.png')}}" />
-           <img id="stock_image" src="{{url_for('static', filename='stocks.png')}}" />
+    <h3 id='portfolio_title'>Portfolio breakdown</h3>
+
+     <div class="container" id='main_container'>
+           <div class = 'container' id='stock_container'>          
+           </div>           
+     </div>
+
+     <div class="container" id='image_containers'>
+         <img id="portfolio_image" src="{{url_for('static', filename='portfolio.png')}}" />
+         <img id="stock_image" src="{{url_for('static', filename='stocks.png')}}" />
      </div>
    
      <script type="text/javascript">
@@ -100,18 +106,18 @@
                         $("#stock_image").attr("src", "static/stocks.png?"+d.getTime());  
                         $("#portfolio_image").attr("src", "static/portfolio.png?"+d.getTime());                        
                         var portfolio = response.portfolio;
-                        console.log(portfolio)
-                        for (var i =0; i < portfolio.length; i++){
-                            stock_object = portfolio[i];
-                            console.log(stock_object)
-                            for(var property in stock_object){
-                                console.log( 'property' + property + ' = ' + stock_object[property]);
-                            }
+                        portfolio = JSON.parse(portfolio);
+                        //console.log(portfolio);
+                        for (var stock in portfolio){
+                            //console.log(portfolio[stock].name);
+                            $('#stock_container').append('<h4> ' + stock + '</h4>');
+                            $('#stock_container').append('<p> Name:' + portfolio[stock].name + '</p>');
+                            $('#stock_container').append('<p> Stocks purchased:' + portfolio[stock].count + '</p>');
+                            $('#stock_container').append('<p> Stock price:' + portfolio[stock].price + '</p>');
+                            $('#stock_container').append('<p> Amount spent:' + portfolio[stock].amount + '</p>');
+                            $('#stock_container').append('<p> Name:' + portfolio[stock].name + '</p>');
+                            $('#stock_container').append('<h2> ' + '----------------' + '</h4>');
                         }
-                        //json_data = JSON.parse(response);
-                        //$("#stock_time").text(response.portfolio);
-                        //$("#stock_name").text(response.portfolio[1].name);
-                        //$("#stock_changes").text(response.portfolio[2].name);
                         
                     },
                     error: function(error) {
