@@ -28,12 +28,16 @@ def runn():
 	
 	if not request.form['total_amount']:
 		abort(400, 'Enter a valid amount, greater than 5000!')
+	else:
+		total_amount = float(request.form['total_amount'])
+		if total_amount < 5000:
+			abort(400, 'Enter a valid amount, greater than 5000!')
+
 
 	if request.form['strategy_1'] == 'None':
 		abort(400, 'Please choose atleast one valid strategy')
 
 	strategy_1 = request.form['strategy_1']
-	total_amount = float(request.form['total_amount'])
 
 
 	if request.form['strategy_2'] == 'None':
