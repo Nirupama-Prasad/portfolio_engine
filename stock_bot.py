@@ -23,6 +23,8 @@ uninvested_amount = 0
 is_stock_drawn = False
 global_stock_index = {}
 is_ratio_method_over = False
+older_portfolio = {}
+older_global_stock_index = {}
 
 def clear_everything():
 	global global_stock_index, portfolio, is_stock_drawn, is_ratio_method_over, uninvested_amount
@@ -84,7 +86,7 @@ def get_portfolio(amount, stock_type):
 		individual_peg = float(stock.get_price_earnings_growth_ratio())
 		if individual_peg == 0:
 			individual_peg = 1
-		internal_dictionary['peg'] = individual_peg
+		internal_dictionary['peg'] = abs(individual_peg)
 		internal_dictionary['name'] = stock.get_name()
 		#calculate sum here for later on
 		sum_peg += internal_dictionary['peg']
@@ -139,8 +141,9 @@ def get_portfolio(amount, stock_type):
 	return total_balance
 
 
-def execute(amount, strategy):
-	global portfolio, dictionary_strategies
+def execute(amount, strategy, ex):
+	global portfolio, dictionary_strategies, older_portfolio
+	global global_stock_index, older_global_stock_index
 	balance = amount
 
 	stock_type = dictionary_strategies[strategy]
@@ -159,7 +162,21 @@ def execute(amount, strategy):
 		# print "new balance =", balance
 
 	#plot five day historical data for new stocks
+	if ex == 'double_1':
+		print 'Round 1'
+		older_portfolio = {}
+		older_global_stock_index = {} 
+		older_portfolio = portfolio.copy()
+		older_global_stock_index = global_stock_index.copy()
+		print older_portfolio
+	elif ex == 'double_2':
+		print 'round 2'
+		portfolio = dict( portfolio.items() + older_portfolio.items() )
+		global_stock_index =  dict(older_global_stock_index.items() + global_stock_index.items())
+		print portfolio
+
 	generate_five_day()
+	
 	return portfolio
 	
 

@@ -24,7 +24,9 @@ def draw_stock(stock):
 	try:
 		five_day_data = stock.get_historical(str(date_five_before), str(date_now))
 	except:
+		print 'Server error - Retrying'
 		return False
+
 	five_day_data = five_day_data[-5:]
 
 	list_dates = []
@@ -77,6 +79,7 @@ def draw_portfolio(portfolio):
 	plt.gcf().autofmt_xdate()
 
 	plt.savefig('static/portfolio.png')
+	plt.clf() 
 
 
 

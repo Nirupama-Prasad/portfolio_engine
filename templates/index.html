@@ -102,10 +102,10 @@
                         $("#stock_image").attr("src", "static/stocks.png?"+d.getTime());  
                         $("#portfolio_image").attr("src", "static/portfolio.png?"+d.getTime());                        
                         
-                        json_data = JSON.parse(response);
-                        $("#stock_time").text(json_data.time);
-                        $("#stock_name").text(json_data.name);
-                        $("#stock_changes").text(json_data.change);
+                        //json_data = JSON.parse(response);
+                        //$("#stock_time").text(response.portfolio);
+                        //$("#stock_name").text(response.portfolio[1].name);
+                        //$("#stock_changes").text(response.portfolio[2].name);
                         
                     },
                     error: function(error) {

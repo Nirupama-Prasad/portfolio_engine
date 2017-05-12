@@ -14,8 +14,8 @@ x9. plot each stocks and portfolio chart
 
 FRONT END INPUT:
 -----------
-1. dropdown lists for strategy picking
-2. text box for amount
+x1. dropdown lists for strategy picking
+x2. text box for amount
 3. portfolio values for multiple strategy
 
 FRONT END OUTPUT:
@@ -23,22 +23,23 @@ FRONT END OUTPUT:
 1. P elements with portfolio details:
 2. for each in stock:
 	amount spent - pie chart
-3. portfolio image itself
+x3. portfolio image itself
 
 BACKEND 
 -----------
-1. pass information back
-2. handle server.pys strategy split
+x1. pass information back
+x2. handle server.pys strategy split
 3. execute clean script as part of click (clear_Everything)
 
 ERROR CHECKS:
 -----------
 x1. for invalid strategy, 
 x1. invalid amount
-2. httperror in lookup.py while doing history
-3. empty input from html
-4. sometimes portfolio exceeds total amount
+x2. httperror in lookup.py while doing history
+x3. empty input from html
+4. sometimes portfolio exceeds total amount - for all except growth stocks
 5. FIX all in the bug list
+
 
 BUG LIST:
 -----------
