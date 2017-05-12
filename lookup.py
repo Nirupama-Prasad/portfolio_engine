@@ -5,11 +5,10 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 dict_stock_to_five_day_prices = {}
-portfolio_history_list = []
 portfolio_dates = []
 
 def clear_everything():
-	global dict_stock_to_five_day_prices, portfolio_dates, portfolio_history_list
+	global dict_stock_to_five_day_prices, portfolio_dates
 	dict_stock_to_five_day_prices = {}
 	portfolio_history_list = []
 	portfolio_dates = []
@@ -24,10 +23,10 @@ def draw_stock(stock):
 	try:
 		five_day_data = stock.get_historical(str(date_five_before), str(date_now))
 	except:
-		print 'Server error - Retrying'
+		print 'Server error (History) - Retrying'
 		return False
 
-	five_day_data = five_day_data[-5:]
+	five_day_data = five_day_data[:5]
 
 	list_dates = []
 	list_prices = []
@@ -51,7 +50,7 @@ def draw_stock(stock):
 	return True
 
 def draw_portfolio(portfolio):
-	global portfolio_history_list, dict_stock_to_five_day_prices, portfolio_dates
+	global dict_stock_to_five_day_prices, portfolio_dates
 
 	print dict_stock_to_five_day_prices
 	print "*" * 80
@@ -66,7 +65,7 @@ def draw_portfolio(portfolio):
 	list_prices = [0,0,0,0,0]
 	for each in dict_stock_to_five_day_prices.values():
 		for index in range(0, 5):
-			list_prices[index] += each[index]
+			list_prices[index] += int(each[index])
 		
 	print list_prices
 

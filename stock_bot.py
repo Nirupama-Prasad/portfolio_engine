@@ -53,7 +53,7 @@ def cache_stocks(stock_type):
 			stock = sh(each_stock)
 			global_stock_index[each_stock] = stock
 		except urllib2.HTTPError:
-			print "Server error - Retrying"
+			print "Server error (Cache) - Retrying"
 			return False
 	return True
 
@@ -117,7 +117,6 @@ def get_portfolio(amount, stock_type):
 	if total_balance >= amount:
 		is_ratio_method_over = True
 		stock_symbol = get_eligible_stock(stock_dictionary, amount)
-		# print "chosen stock: ", stock_symbol
 		stock_price = stock_dictionary[stock_symbol]['price']
 		extra_stocks = int(total_balance / stock_price)
 		amount_spent = extra_stocks * stock_price
@@ -127,7 +126,6 @@ def get_portfolio(amount, stock_type):
 		return total_balance
 
 	if total_balance == 0:
-		# print 'amount uninvested: ', amount
 		uninvested_amount =  amount
 		return 0
 
